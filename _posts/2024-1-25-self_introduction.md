@@ -8,3 +8,4 @@ author: jason20110517
 ---
 ### 汉化、破解 by jason20110517@163.com
 QQ@3197624122,Bilibili@js0517,Weixin@Jason
+任何软件的使用密码都是“jason20110517”（不带引号）
