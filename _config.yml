@@ -1,8 +1,8 @@
-name: "Pianfan's blog"
-description: "翩帆的个人技术博客"
+name: "Jason's blog"
+description: "Jason的个人技术博客"
 
-avatar: https://pianfan.github.io/images/avatar.png
-favicon: https://pianfan.github.io/images/favicon.ico
+avatar: https://pic1.imgdb.cn/item/6794912fd0e0a243d4f7c2e0.jpg
+favicon: https://pic1.imgdb.cn/item/67949209d0e0a243d4f7c324.jpg
 
 navigation:
   - name: 首页
@@ -18,16 +18,16 @@ excerpt_separator: <!-- more -->
 
 footer-links:
   zhihu: 
-  email: xiongyunhan@outlook.com
+  email: jason20110517@163.com
   facebook:
-  github: pianfan
+  github: Jason20110517
   rss: # just type anything here for a working RSS icon
   twitter: 
   youtube:
 
-footer-text: Copyright (c) 2024 Pianfan
+footer-text: Copyright (c) 2024 Pianfan Blog
 
-url: https://pianfan.github.io
+url: https://jason20110517.github.io
 
 permalink: /:title/
 paginate_path: /page:num/
