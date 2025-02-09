@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: "洛谷各大管理的真实姓名"
