@@ -7,13 +7,13 @@ comments: true
 author: jason20110517
 ---
 
-为避免页面bug，请点击Raad More查看
+为避免页面bug，请点击下方`Read More`查看
 
-为避免页面bug，请点击Raad More查看
+为避免页面bug，请点击下方`Read More`查看
 
-为避免页面bug，请点击Raad More查看
+为避免页面bug，请点击下方`Read More`查看
 
-为避免页面bug，请点击Raad More查看
+为避免页面bug，请点击下方`Read More`查看
 
 | 洛谷用户名        | 真名   |
 | ----------------- | ------ |
