@@ -89,8 +89,9 @@ upd on 2024/1/17: for saving
 
 
 
-## C++ 98
 
+
+## C++ 98
 ### algorithm 库
 
 `algorithm`  中有大量的函数，这些函数都位于命名空间 `std` 中。
@@ -417,3 +418,384 @@ bit_xor<>;//x^y
 
   - 返回二进制下前导零的个数，$x=0$ 时UB。
   - 时间复杂度 $O(1)$。
+
+
+
+## C++ 11
+
+从 C++98 到 C++11 是一次重大的飞跃，许许多多非常实用的函数与语法如雨后春笋般出现。
+
+### 零零散散的语法糖
+
+#### auto
+
+`auto` 在 C++98 中是一个较偏僻冷门的东西，因此在 C++11 中直接将其抛弃，并赋予其新生。
+
+- `auto` 可以用来声明一个变量，其类型由初始化的内容定义。
+
+  ```cpp
+  auto a=1;//a is int
+  auto b=2.0;//b is double
+  set<int>s;
+  auto it=s.end();//it is set<int>::iterator
+  ```
+
+  因此 `auto` 声明变量时必须有初始化内容，否则将 CE。
+
+  同时，也可以声明为其它变量的引用：
+
+  ```cpp
+  auto x=true;//x is bool
+  auto&y=x;//y is reference of x
+  y=false;
+  if(x)
+      throw;//will not run
+  ```
+
+  常用于声明一些类型名很长的变量，如：`set<pair<int,int>,greater<pair<int,int>>>::iterator`
+
+- `auto` 用于声明有固定返回值类型的函数，在 C++11 时需要尾随返回类，但在 C++14 及之后就不需要了：
+
+  ```cpp
+  auto func(double x)->double{
+    return x*2-1;
+  }//C++11
+  
+  auto func2(double x){
+    return x*2-1;
+  }//C++14
+  ```
+
+- 也可以用来声明一个 lambda 函数，见下文 lambda 表达式 部分。
+
+
+
+
+
+#### lambda 表达式
+
+lambda 相当于一个函数，其形式多变，但都是由若干部分组成：
+
+```cpp
+[captures](params)->T{body}
+```
+
+其中 `captures` 填捕获的方式，`params` 填传入的参数，`T` 填返回值类型，`body` 就是函数主体。
+
+- `captures`
+
+  有两种填法：`&` 和 `=`，不填时，局部的 lambda 将不会进行捕获，全局的 lambda 默认为 `&`。
+
+  `&` 表示这个表达式捕获的内容是引用的形式，而 `=` 表示捕获的内容是复制且只读的。
+
+  ```cpp
+  int x=1;
+  [=](){x=2;}();//CE,向只读变量‘x’赋值
+  [&](){x=2;}();//OK,x will be 2
+  //上面 lambda 最后的括号是对其进行调用
+  ```
+
+  这里有坑：请尽量使用 `&`，考虑如下程序片段：
+
+  ```cpp
+  vector<int>v(n),o(n);
+  for(int&x:v)cin>>x;
+  iota(o.begin(),o.end(),0);
+  sort(o.begin(),o.end(),[=](int x,int y){return v[x]<v[y];});
+  ```
+
+  其作用是按 $v$ 的大小对其下标 $o$ 排序，但注意使用的是 `=`，这意味着每次调用 lambda 时都将 $v$ 拷贝了一份，一共拷贝 $n\log n$ 次，直接 TLE。
+
+- `params`
+
+  和普通函数一样。
+
+- `T`
+
+  若此处省略，则其返回值将为 `auto`：
+
+  ```cpp
+  [](int x){return x*2.0;}(3);//will return double 6.0
+  ```
+
+也可使用 `auto` 将 lambda 表达式作为一个可调用的函数：
+
+```cpp
+auto sqr=[](double x){
+    return x*x;
+};
+```
+
+那么每次调用 `sqr(r)` 都将返回 $r\times r$ 的值。
+
+这样写的函数将自带 `inline`，比写 `inline` 短多了。
+
+
+
+#### range-for
+
+`for` 循环中轻松地遍历容器（`vector`、`set`、`list` 等）：
+
+```cpp
+vector<int>v={5,1,3,4,2};
+for(int x:v)cout<<x<<' ';
+//output:5 1 3 4 2
+//按顺序遍历 v 中的每一个元素，并赋值给 x。
+```
+
+也可以将 $x$ 声明为引用：
+
+```cpp
+vector<int>v(n);
+for(int&x:v)cin>>x;
+//读入一个长度为 n 的序列
+```
+
+注意，$x$ 的类型必须与 $v$ 中元素的类型保持一致，否则会 CE。
+
+也可以使用 `auto` 进行声明。
+
+注意，若遍历数组，那将从头到尾遍历一遍，不推荐。
+
+用处极为广泛，常用于对于 `vector` 存图的遍历等。
+
+
+
+### STL 
+
+#### emplace
+
+在很多 STL 容器中都出现了一个新的函数——`emplace`，如：
+
+```cpp
+set<int>s;
+s.insert(1);//C++98
+s.emplace(1);//C++11
+
+queue<int>q;
+q.push(2);//C++98
+q.emplace(2);//C++11
+
+vector<int>v;
+v.push_back(3)//C++98
+v.emplace_back(3);//C++11
+
+deque<int>dq;
+dq.push_front(4)//C++98
+dq.emplace_front(4);//C++11
+```
+
+`emplace` 相比原先的 `insert/push/push_back/push_front` 区别是，`emplace` 通过调用元素的构造函数来进行插入，所以它会比之前的函数更快一些。
+
+因此也产生了使用上的区别：
+
+```cpp
+set<pair<int,int>>s;
+s.insert(make_pair(1,2));//C++98
+s.emplace(1,2);//C++11
+```
+
+更加便于书写。
+
+但这要求用户自己的类型必须含有构造函数：
+
+```cpp
+struct A{
+    int x;
+};
+queue<A>q;
+q.emplace(1);//CE，A 没有构造函数
+
+struct B{
+    int x;
+    B(int _x=0):x(_x){}
+};
+queue<B>p;
+p.emplace(1);//OK，B 有构造函数
+```
+
+
+
+#### shrink_to_fit
+
+`vector/deque/string/basic_string` 的 `shrink_to_fit` 可以使其 capacity 调整为 size 的大小，如：
+
+```cpp
+vector<int>v={1,2,3};
+cout<<v.size()<<' '<<v.capacity()<<'\n';
+v.clear();
+cout<<v.size()<<' '<<v.capacity()<<'\n';
+v.shrink_to_fit();
+cout<<v.size()<<' '<<v.capacity()<<'\n';
+/*
+output:
+3 3
+0 3
+0 0
+*/
+```
+
+常用于 `clear()` 之后释放内存。
+
+
+
+### algorithm 库
+
+- `shuffle(bg,ed,gen)`
+  - 打乱 $[bg,ed)$ 的顺序，`gen` 是一个随机数生成器（mt19937）。
+  - 时间复杂度 $O(n)$。
+  - C++11 之后请尽量使用 `shuffle` 而不是 `random_shuffle`
+- `is_sorted(bg,ed)`
+  - 判断 $[bg,ed)$ 是否升序排序。
+  - 时间复杂度 $O(n)$。
+- `minmax(a,b)`
+  - 返回一个 `pair<>`，其 `first` 为 $\min(a,b)$，`second` 为 $\max(a,b)$。
+  - 时间复杂度 $O(1)$。
+  - 常用于无向图存边的去重问题。
+- `max(l)/min(l)`
+  - $l$ 是一个初始化列表，这个函数返回 $l$ 中最大 / 最小的元素。
+  - 时间复杂度 $O(size_l)$。
+  - 在多个元素求最大 / 最小时非常好用：`max({a,b,c})`
+- `minmax(l)`
+  - $l$ 是一个初始化列表，这个函数返回一个 `pair<>`，其 `first` 为 $l$ 中最小的元素，`second` 为 $l$ 中最大的元素。
+  - 时间复杂度 $O(size_l)$。
+  - 若要求一个序列 / 容器中最小和最大的元素，请使用 `minmax_element`。
+- `minmax_element(bg,ed)`
+  - 返回一个 `pair<>`，其 `first` 为 $[bg,ed)$ 中最小的元素，`second` 为 $[bg,ed)$ 中最大的元素。
+  - 时间复杂度 $O(n)$。
+
+
+
+
+### numeric 库
+
+- `iota(bg,ed,val)`
+  - 将 $[bg,ed)$ 中的元素依次赋值为 $val,val+1,val+2,\cdots$
+  - 时间复杂度 $O(n)$。
+  - 常用于给并查集初始化。
+
+
+
+
+### iterator 库
+
+- `prev(it)/next(it)`
+
+  - 返回迭代器 $it$ 的前驱 / 后继。
+
+  - 复杂度与 `++/--` 的复杂度相同，取决于容器。
+
+  - 可以更方便的实现许多内容：
+
+    ```cpp
+    set<int>s={1,2,3,4,5};
+    auto i=s.lower_bound(3);
+    ++i;
+    auto j=i;
+    --i;
+    //这是很麻烦的
+    auto j=next(i);//很方便
+    ```
+
+  - 请习惯在 C++98 环境下使用 `next` 的同学们注意：这会导致声明一个叫 `next` 的变量时出错。
+
+- `begin(container)/end(container)`
+
+  - 返回容器 $\texttt{container}$ 的  `begin()` 和 `end()`。
+
+  - 复杂度取决于容器。
+
+  - 作用就是相比原先要短一个字节：
+
+    ```cpp
+    set<int>t;
+    auto i=t.begin();
+    auto i=begin(t);//你比一比谁更短
+    ```
+
+
+
+### functional 库
+
+- `function` 
+
+  声明方式：`function<R(Args...)>f;`
+
+  其中 `R` 为返回值，`Args...` 为形参，`f` 为名称。
+
+  一个 `function` 可以作为函数直接使用。
+
+  ```cpp
+  function<int(int,int)>f[4]={
+    [](int x,int y){return x+y;},
+    [](int x,int y){return x-y;},
+    [](int x,int y){return x*y;},
+    [](int x,int y){return x/y;}
+  };
+  //声明一个数组，每个元素都是一个 function<int(int,int)>
+  
+  for(int i=0;i<4;++i)
+      cout<<f[i](5,2)<<' ';
+  //output:7 3 10 2
+  ```
+
+  常用来代替函数指针。
+
+
+
+
+### random 库
+
+用于代替垃圾的 `rand`。
+
+- `mt19937` 
+
+  - 一个类型，作为随机数生成器。
+
+  - 其构造函数应传入一个数字作为随机种子，使用时用法和 `rand` 相同。
+
+  - 生成 `unsigned int` 范围内的随机数。
+
+    ```cpp
+    mt19937 gen(123456);//123456 为随机种子
+    int x=gen()%10000;//x will in [0,10000)
+    uint32_t y=gen();//normally y will in [0,2^32)
+    ```
+
+  - 随机种子通常为时间相关，下面的非常常用，建议背过
+
+    ```cpp
+    mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
+    //chrono 在头文件 <chrono> 中
+    ```
+
+- `uniform_int_distribution<T>(L,R)`
+
+  - 随机数发生器，每次调用时传入一个 `mt19937`，返回一个 $[L,R]$ 之间的整数，类型为 `T`，若 `T` 为空则默认为 `int`。
+
+- `uniform_real_distribution<T>(L,R)`
+
+  - 随机数发生器，每次调用时传入一个 `mt19937`，返回一个 $[L,R]$ 之间的实数，类型为 `T`，若 `T` 为空则默认为 `double`。
+
+```cpp
+mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
+uniform_int_distribution<>dist(1,1000);
+int x=dist(gen);// x is a random int in [1,1000]
+uniform_real_distribution<>dist2(-10,10);
+double y=dist2(gen);// y is a random double in [-10,10]
+```
+
+
+
+
+### cmath 库
+
+- `exp2(x)`
+  - 返回 $2^x$。
+- `log2(x)`
+  - 返回 $\log_2(x)$。
+- `hypot(x,y)`
+  - 返回 $\sqrt{x^2+y^2}$。
+  - 常用于求两点之间的距离，非常方便。
+- `NAN`，`INFINITY`
+  - 两个 `define` 出的量，由编译器实现定义。
