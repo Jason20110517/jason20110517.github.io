@@ -28,6 +28,7 @@ upd on 2024/1/17: for saving
 ## 目录
 
 ### C++98
+
 - algorithm 库
   - 一些常见且比较重要的函数
   - 一些比较冷门的函数
@@ -111,7 +112,7 @@ upd on 2024/1/17: for saving
 
   - 复杂度为 $O(n)$，常数略大于 `memset`。
 
-		在 $val=0/-1/\texttt{0x3f}$  时常数与 `memset` 相同。（存疑）
+    在 $val=0/-1/\texttt{0x3f}$  时常数与 `memset` 相同。（存疑）
 
   - 常用于弥补 `memset` 无法赋值的问题，如赋值一个数组为 $1$。
 
@@ -126,15 +127,17 @@ upd on 2024/1/17: for saving
 
   - 时间复杂度 $O(n\log n)$，要 $O(n)$ 的额外空间。
 
-		当空间不足时使用 $O(n\log^2n)$ 的双调排序。
+    当空间不足时使用 $O(n\log^2n)$ 的双调排序。
 
 - `nth_element(bg,md,ed)`：
+
   - 将 $[bg,ed)$ 中的内容重新分配顺序，小于（等于） `md` 的元素在 $[bg,md)$，大于（等于） `md` 的元素都在 $(md,ed)$。
   - 时间复杂度 $O(n)$，需要 $O(n)$ 的额外空间。
   - 第四个参数为比较函数，若不传则默认 `less<>()`。
   - 常用于线性求序列中的第 $k$ 大，常用于实现替罪羊树。
 
 - `max_element/min_element(bg,ed)`
+
   - 返回指向 $[bg,ed)$ 中最大 / 最小的元素的指针。
 
   - 时间复杂度 $O(n)$。
@@ -148,16 +151,16 @@ upd on 2024/1/17: for saving
   - 打乱 $[bg,ed)$ 中元素的顺序。
   - 时间复杂度 $O(n)$。
   - 第三个参数传入一个函数 `func(int n)`，这个函数的返回值是一个 $[1,n]$ 中的随机整数。
-  - 在未传入第三参数时，若 $ed-bg>\texttt{RAND\_MAX}$ 那么其**随机性将无法保证**。
+  - 在未传入第三参数时，若 $ed-bg>RAND\_MAX$ 那么其**随机性将无法保证**。
   - 在 `C++14` 中被弃用，在 `C++17` 中被废除，`C++11` 之后都**应当以 `shuffle` 替代之**。
 
 - `next_permutation(bg,ed)`
 
   - 将 $[bg,ed)$ 更改为下一个排列，并返回 $1$。
 
-		若 $[bg,ed)$ 已经是最后一个排列，那么返回 $0$。
+    若 $[bg,ed)$ 已经是最后一个排列，那么返回 $0$。
 
-		下一个排列的定义为字典序严格大于当前排列的下一个排列。
+    下一个排列的定义为字典序严格大于当前排列的下一个排列。
 
   - 时间复杂度 $O(n)$。
 
@@ -165,12 +168,12 @@ upd on 2024/1/17: for saving
 
   - 常用于枚举全排列：
 
-		```cpp
-		iota(p,p+n,0);
-		do{
-		 //do something   
-		}while(next_permutation(p,p+n));
-		```
+    ```cpp
+    iota(p,p+n,0);
+    do{
+     //do something   
+    }while(next_permutation(p,p+n));
+    ```
 
   - `prev_permutation(bg,ed)` 可以求出上一个排列。
 
@@ -183,7 +186,7 @@ upd on 2024/1/17: for saving
 
   - $[bg_1,ed_1)$ 和 $[bg_2,ed_2)$ 是两个有序序列，对其进行归并并存入 $bg_3$。
 
-		**不能够原地归并**，若要原地归并请使用 `inplace_merge`。
+    **不能够原地归并**，若要原地归并请使用 `inplace_merge`。
 
   - 时间复杂度 $O(ed_1-bg_1+ed_2-bg_2)$。
 
@@ -195,9 +198,9 @@ upd on 2024/1/17: for saving
 
   - 时间复杂度 $O(n)$，需要 $O(n)$ 的额外空间。
 
-		当空间不足时使用 $O(n\log n)$ 的原地排序。
+    当空间不足时使用 $O(n\log n)$ 的原地排序。
 
-		常数较小，可能比手写的还快。
+    常数较小，可能比手写的还快。
 
   - 可以传入第四个参数作为比较函数。
 
@@ -220,11 +223,13 @@ upd on 2024/1/17: for saving
   - 时间复杂度 $O(n)$。
 
 - `for_each(bg,ed,func)`
+
   - 对 $[bg,ed)$ 中所有元素执行函数 `func`。
   - 时间复杂度 $O(n\times f)$。
   - 其实没啥用，就是能压行。
 
 - `transform(bg1,ed1,bg2,bg3,func)`
+
   - 对 $[bg_1,ed_1)$ 和 $[bg_2,bg_2+ed_1-bg_1)$ 中的元素依次执行二元函数 `func`，并将返回值存入 $bg_3$。
   - 时间复杂度 $O(n\times f)$。
 
@@ -236,14 +241,14 @@ upd on 2024/1/17: for saving
 
   - 例子：
 
-		```cpp
-		vector<int>a={1,2,3,4,5};
-		rotate(a.begin(),a.begin()+1,a.end());
-		//a={2,3,4,5,1}
-		vector<int>b={1,2,3,4,5};
-		rotate(b.rbegin(),b.rbegin()+1,b.rend());
-		//b={5,1,2,3,4}
-		```
+    ```cpp
+    vector<int>a={1,2,3,4,5};
+    rotate(a.begin(),a.begin()+1,a.end());
+    //a={2,3,4,5,1}
+    vector<int>b={1,2,3,4,5};
+    rotate(b.rbegin(),b.rbegin()+1,b.rend());
+    //b={5,1,2,3,4}
+    ```
 
 
 
@@ -278,10 +283,10 @@ upd on 2024/1/17: for saving
 
   - 可以用于求序列和，但注意，该函数返回值与 $val$ 类型一致，意味着你要注意 `long long` 的问题：
 
-		```cpp
-		accumulate(bg,ed,0);//返回值是 int，可能溢出
-		accumulate(bg,ed,0ll);//返回值是 long long
-		```
+    ```cpp
+    accumulate(bg,ed,0);//返回值是 int，可能溢出
+    accumulate(bg,ed,0ll);//返回值是 long long
+    ```
 
 - `inner_product(bg1,ed1,bg2,val)`
 
@@ -365,7 +370,7 @@ bit_xor<>;//x^y
 
   - 对数家族还有：`log10(x)` 和 `log2(x)`。
 
-		请注意，`log2(x)` 是 C++11 的。
+    请注意，`log2(x)` 是 C++11 的。
 
 - `ceil(x)`
 
@@ -393,7 +398,7 @@ bit_xor<>;//x^y
 
   - 时间复杂度有说 $O(\log\log x)$ 的，也有说 $O(1)$ 的。
 
-		一定比手写的快。
+    一定比手写的快。
 
 - `__builtin_parity(x)`
 
@@ -456,7 +461,7 @@ bit_xor<>;//x^y
   auto func(double x)->double{
     return x*2-1;
   }//C++11
-
+  
   auto func2(double x){
     return x*2-1;
   }//C++14
@@ -678,18 +683,20 @@ output:
 - `prev(it)/next(it)`
 
   - 返回迭代器 $it$ 的前驱 / 后继。
+
   - 复杂度与 `++/--` 的复杂度相同，取决于容器。
+
   - 可以更方便的实现许多内容：
 
-		```cpp
-		set<int>s={1,2,3,4,5};
-		auto i=s.lower_bound(3);
-		++i;
-		auto j=i;
-		--i;
-		//这是很麻烦的
-		auto j=next(i);//很方便
-		```
+    ```cpp
+    set<int>s={1,2,3,4,5};
+    auto i=s.lower_bound(3);
+    ++i;
+    auto j=i;
+    --i;
+    //这是很麻烦的
+    auto j=next(i);//很方便
+    ```
 
   - 请习惯在 C++98 环境下使用 `next` 的同学们注意：这会导致声明一个叫 `next` 的变量时出错。
 
@@ -701,11 +708,11 @@ output:
 
   - 作用就是相比原先要短一个字节：
 
-		```cpp
-		set<int>t;
-		auto i=t.begin();
-		auto i=begin(t);//你比一比谁更短
-		```
+    ```cpp
+    set<int>t;
+    auto i=t.begin();
+    auto i=begin(t);//你比一比谁更短
+    ```
 
 
 
@@ -727,7 +734,7 @@ output:
     [](int x,int y){return x/y;}
   };
   //声明一个数组，每个元素都是一个 function<int(int,int)>
-
+  
   for(int i=0;i<4;++i)
       cout<<f[i](5,2)<<' ';
   //output:7 3 10 2
@@ -747,20 +754,21 @@ output:
   - 一个类型，作为随机数生成器。
 
   - 其构造函数应传入一个数字作为随机种子，使用时用法和 `rand` 相同。
+
   - 生成 `unsigned int` 范围内的随机数。
 
-		```cpp
-		mt19937 gen(123456);//123456 为随机种子
-		int x=gen()%10000;//x will in [0,10000)
-		uint32_t y=gen();//normally y will in [0,2^32)
-		```
+    ```cpp
+    mt19937 gen(123456);//123456 为随机种子
+    int x=gen()%10000;//x will in [0,10000)
+    uint32_t y=gen();//normally y will in [0,2^32)
+    ```
 
   - 随机种子通常为时间相关，下面的非常常用，建议背过
 
-		```cpp
-		mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
-		//chrono 在头文件 <chrono> 中
-		```
+    ```cpp
+    mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
+    //chrono 在头文件 <chrono> 中
+    ```
 
 - `uniform_int_distribution<T>(L,R)`
 
@@ -776,7 +784,7 @@ uniform_int_distribution<>dist(1,1000);
 int x=dist(gen);// x is a random int in [1,1000]
 uniform_real_distribution<>dist2(-10,10);
 double y=dist2(gen);// y is a random double in [-10,10]
-  ```
+```
 
 
 
@@ -988,7 +996,7 @@ using std::cin,std::cout,std::cerr;
 ### numeric 库
 
 - `gcd(x,y)/lcm(x,y)`
-  - 返回 $\gcd(|x|,|y|)$ / $\operatorname {lcm}(|x|,|y|)$ 的值。
+  - 返回 $\gcd(|x|,|y|)$ / $lcm(|x|,|y|)$ 的值。
   - 复杂度对数级别的。
   - 保证了返回值的符号是正。
   - `lcm` 的实现是先除后乘。
@@ -1099,16 +1107,16 @@ C++20 加入的新库，头文件 `<bit>`。
 
   - 使用 `__builtin_popcount` 实现，但会检查传入的参数是否为无符号整形。
 
-		```cpp
-		unsigned int x=3;
-		cout<<popcount(x)<<'\n';//OK, output:2
-		int y=7;
-		cout<<popcount(y)<<'\n';//CE, y is not unsigned 
-		double z=2.5;
-		cout<<popcount(z)<<'\n';//CE, z is not integer
-		```
+    ```cpp
+    unsigned int x=3;
+    cout<<popcount(x)<<'\n';//OK, output:2
+    int y=7;
+    cout<<popcount(y)<<'\n';//CE, y is not unsigned 
+    double z=2.5;
+    cout<<popcount(z)<<'\n';//CE, z is not integer
+    ```
 
-		下述 bit 库中的函数也都会进行这个检查。
+    下述 bit 库中的函数也都会进行这个检查。
 
 - ```cpp
   countl_zero(x);//从最高位起连续的 0 的数量
@@ -1165,11 +1173,11 @@ C++20 加入的库，提供了各种处理元素范围的组件，在头文件 `
 
   - 由 $[bg,ed)$ 之间所有自然数组成的 `view`。
 
-		```cpp
-		for(int i:views::iota(1,6))
-		 cout<<i<<' ';
-		//output:1 2 3 4 5
-		```
+    ```cpp
+    for(int i:views::iota(1,6))
+     cout<<i<<' ';
+    //output:1 2 3 4 5
+    ```
 
   - 若省略 $ed$ 则为一个无限长的序列。
 
@@ -1180,89 +1188,89 @@ C++20 加入的库，提供了各种处理元素范围的组件，在头文件 `
 
   - 包含 $v$ 所有元素的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::all(v))
-		 cout<<i<<' ';
-		//output: 1 2 3 4 5
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::all(v))
+     cout<<i<<' ';
+    //output: 1 2 3 4 5
+    ```
 
 - `transform(v,func)` 
 
   - 对 $v$ 中每个元素执行 `func` 后的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::transform(v,[](int x){return x*2-1;}))
-		 cout<<i<<' ';
-		//output:1 3 5 7 9
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::transform(v,[](int x){return x*2-1;}))
+     cout<<i<<' ';
+    //output:1 3 5 7 9
+    ```
 
 - `take(v,n)`
 
   - $v$ 的前 $n$ 个元素组成的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::take(v,3))
-		 cout<<i<<' ';
-		//output:1 2 3
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::take(v,3))
+     cout<<i<<' ';
+    //output:1 2 3
+    ```
 
 - `take_while(v,func)`
 
   - $v$ 的起始元素到首个使得 `func` 返回 `false` 为止的元素组成的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::take_while(v,[](int x){return x<=3;}))
-		 cout<<i<<' ';
-		//output:1 2 3
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::take_while(v,[](int x){return x<=3;}))
+     cout<<i<<' ';
+    //output:1 2 3
+    ```
 
 - `drop_while(v,func)`
 
   - 跳过直到第一个使得 `func` 返回 `false` 的元素后，剩余元素组成的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::drop_while(v,[](int x){return x<=3;}))
-		 cout<<i<<' ';
-		//output:4 5 
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::drop_while(v,[](int x){return x<=3;}))
+     cout<<i<<' ';
+    //output:4 5 
+    ```
 
 - `drop(v,n)`
 
   - $v$ 的从第 $n+1$ 个元素开始到结束（跳过前 $n$ 个）的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::drop(v,3))
-		 cout<<i<<' ';
-		//output:4 5
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::drop(v,3))
+     cout<<i<<' ';
+    //output:4 5
+    ```
 
 - `reverse(v)`
 
   - 翻转 $v$ 的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::reverse(v))
-		 cout<<i<<' ';
-		//output:5 4 3 2 1 
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::reverse(v))
+     cout<<i<<' ';
+    //output:5 4 3 2 1 
+    ```
 
 - `filter(v,func)`
 
   - 使得 `func` 返回值为 `true` 的元素的 `view`。
 
-		```cpp
-		vector v={1,2,3,4,5};
-		for(int i:views::filter(v,[](int x){return x&1;}))
-		 cout<<i<<' ';
-		//output:1 3 5
-		```
+    ```cpp
+    vector v={1,2,3,4,5};
+    for(int i:views::filter(v,[](int x){return x&1;}))
+     cout<<i<<' ';
+    //output:1 3 5
+    ```
 
 - 可以使用运算符 `|` 连接两个或多个范围适配器：
 
@@ -1271,7 +1279,7 @@ C++20 加入的库，提供了各种处理元素范围的组件，在头文件 `
   for(int i:v|views::reverse|views::take(3))
    cout<<i<<' ';
   //output:5 4 3
-
+  
   auto odd=[](int x){return x&1;};
   auto sqr=[](int x){return x*x;};
   for(int i:v|views::filter(odd)|views::transform(sqr))
@@ -1283,11 +1291,11 @@ C++20 加入的库，提供了各种处理元素范围的组件，在头文件 `
   ```cpp
   vector v={1,2,3,4,5};
   using views::take,views::drop;
-
+  
   for(int i:v|take(3)|drop(1))
    cout<<i<<' ';
   //output:2 3
-
+  
   for(int i:v|drop(1)|take(3))
    cout<<i<<' ';
   //output:2 3 4
@@ -1300,21 +1308,21 @@ C++20 加入的库，提供了各种处理元素范围的组件，在头文件 `
 
 头文件 `<numbers>`，命名空间 `std::numbers` 中提供了大量的数学常数：
 
-| 代码表示           | 数学表示                            |
-| :------------- | :------------------------------ |
-| `e_v`          | $e$                             |
-| `log2e_v`      | $\log_2e$                       |
-| `log10e_v`     | $\log_{10}e$                    |
-| `pi_v`         | $\pi$                           |
-| `inv_pi_v`     | $\frac 1\pi$                    |
-| `inv_sqrtpi_v` | $\frac 1{\sqrt \pi}$            |
-| `ln2_v`        | $\ln 2$                         |
-| `ln10_v`       | $\ln 10$                        |
-| `sqrt2_v`      | $\sqrt 2$                       |
-| `sqrt3_v`      | $\sqrt 3$                       |
-| `inv_sqrt3_v`  | $\frac 1{\sqrt 3}$              |
-| `egamma_v`     | 欧拉-马斯克若尼常数 $\gamma$             |
-| `phi_v`        | 黄金比 $\phi=\frac{\sqrt 5+1}{2}$（注意这里是加号！！！）|
+| 代码表示       | 数学表示                                                  |
+| :------------- | :-------------------------------------------------------- |
+| `e_v`          | $e$                                                       |
+| `log2e_v`      | $\log_2e$                                                 |
+| `log10e_v`     | $\log_{10}e$                                              |
+| `pi_v`         | $\pi$                                                     |
+| `inv_pi_v`     | $\frac 1\pi$                                              |
+| `inv_sqrtpi_v` | $\frac 1{\sqrt \pi}$                                      |
+| `ln2_v`        | $\ln 2$                                                   |
+| `ln10_v`       | $\ln 10$                                                  |
+| `sqrt2_v`      | $\sqrt 2$                                                 |
+| `sqrt3_v`      | $\sqrt 3$                                                 |
+| `inv_sqrt3_v`  | $\frac 1{\sqrt 3}$                                        |
+| `egamma_v`     | 欧拉-马斯克若尼常数 $\gamma$                              |
+| `phi_v`        | 黄金比 $\phi=\frac{\sqrt 5+1}{2}$（注意这里是加号！！！） |
 
 这些都是类模板，调用时请填入类型：
 
