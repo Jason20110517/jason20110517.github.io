@@ -9,11 +9,11 @@ author: jason20110517
 
 **application/x-www-form-urlencoded** is a MIME type used to encode key-value pairs in HTTP requests. This encoding is commonly used when submitting form data via HTTP POST requests. The data is encoded in a way that is similar to URL query parameters, making it suitable for simple text data.
 
-###Key Principles
+### Key Principles
 
 When using **application/x-www-form-urlencoded**, the data is encoded as key-value pairs, with each pair separated by an ampersand (`&`). The key and value within each pair are separated by an equal sign (`=`). Special characters are percent-encoded, and spaces are replaced by the plus sign (`+`). For example, the data `name=John Doe&age=30` would be encoded as `name=John+Doe&age=30`.
 
-###Code Example
+### Code Example
 
 Here is an example of how to send data using **application/x-www-form-urlencoded** in Python:
 
@@ -30,7 +30,7 @@ print(response.text)
 
 In this example, the `requests` library is used to send a POST request with the data encoded as **application/x-www-form-urlencoded**. The `data` parameter in the `requests.post` method automatically encodes the data in the required format.
 
-###Explanation
+### Explanation
 
 The **application/x-www-form-urlencoded** encoding is the default content type for HTML forms. When a form is submitted, the browser encodes the form data and sends it to the server using this encoding. This format is efficient for simple text data but has limitations when dealing with binary data or large files.
 
