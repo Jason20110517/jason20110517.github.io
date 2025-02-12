@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Debian系Linux破解密码"
-date:   2024-2-9
-tags: [Linux]
+date:   2025-2-9
+tags: [Linux,破解]
 comments: true
 author: jason20110517
 ---
