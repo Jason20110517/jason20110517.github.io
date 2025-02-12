@@ -1,13 +1,11 @@
 ---
 layout: post
-title: "关于application/x-www-form-urlencoded"
+title: "从 C++98 到 C++20，寻觅甜甜的语法糖们"
 date:   2024-2-3
 tags: [OI,C++]
 comments: true
 author: jason20110517
 ---
-
-# 从 C++98 到 C++20，寻觅甜甜的语法糖们
 
 >  谔谔，谔谔……
 
