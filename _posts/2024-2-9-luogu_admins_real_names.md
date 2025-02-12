@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "洛谷各大管理的真实姓名"
-date:   2024-2-9
-tags: [洛谷,OI]
+date:   2024-02-09
+tags: [洛谷]
 comments: true
 author: jason20110517
 ---
