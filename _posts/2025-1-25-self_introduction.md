@@ -6,7 +6,7 @@ tags: [安卓,破解]
 comments: true
 author: jason20110517
 ---
-### 汉化、破解 by jason20110517@163.com
+## 汉化/破解 by jason20110517@163.com
 
 QQ@3197624122,Bilibili@js0517,Weixin@Jason
 
