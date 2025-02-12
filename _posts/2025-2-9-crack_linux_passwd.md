@@ -7,7 +7,7 @@ comments: true
 author: jason20110517
 ---
 
-### Debian系Linux破解密码
+Debian系Linux破解密码
 
 1.开机长按`Shift`，进入grub菜单；
 
