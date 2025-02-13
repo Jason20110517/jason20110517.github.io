@@ -13,7 +13,7 @@ Debian系Linux破解密码
 
 2.通过键盘↑↓键选择`Advanced options for Ubuntu`，按下`Enter；`
 
-3.通过键盘↑↓键随便选到一个你认识的系统，按`e`；
+3.通过键盘↑↓键随便选到一个你认识的系统（要带`recovery mode`），按`e`；
 
 4.在打开的编辑菜单中通过键盘↑↓键选到`linux`开头的那一行，再通过键盘←→键选到字符串`ro`的字符`r`上，通过`Del`键把后面的字符到`locate=en_US`全部删除，再填入`rw init=/bin/bash`，按`F10`保存；
 
