@@ -2,7 +2,7 @@
 layout: post
 title: "ACFan 原理解析"
 date:   2024-10-31
-tags: [洛谷,OI,C++,作弊]
+tags: [洛谷,OI,C++,破解]
 comments: true
 author: jason20110517
 ---
