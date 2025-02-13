@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Blowing up unordered_map, and how to stop getting hacked on it"
-date:   2018-2-19
+date:   2019-2-19
 tags: [OI,C++]
 comments: true
 author: jason20110517
