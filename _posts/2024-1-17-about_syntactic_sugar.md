@@ -1102,7 +1102,7 @@ if(a==b)cout&lt;&lt;&quot;a==b\n&quot;;//CE not operator==
 <pre><code class='language-cpp' lang='cpp'>#include&lt;bits/stdc++.h&gt;
 using namespace std;
 int main() {
- vector&lt;pair&lt;int,int&gt;&gt;v={{1,2},{3,4}};
+ vector&lt;pair&lt;int,int&gt;&gt;v=&#123;&#123;1,2&#125;,&#123;3,4&#125;&#125;;
  for(int i=0;auto[x,y]:v)
   cout&lt;&lt;(i++)&lt;&lt;&quot; : (&quot;&lt;&lt;x&lt;&lt;&#39;,&#39;&lt;&lt;y&lt;&lt;&quot;)\n&quot;;
 }
