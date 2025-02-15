@@ -7,6 +7,20 @@ comments: true
 author: jason20110517
 ---
 
+Here's a complex equation:
+
+
+<p><span class="math display">\[
+\oint_C rac{e^{z}}{z^2+1} \, dz
+\]</span></p>
+
+
+
+Inline math: <p><span class="math inline">\(x^2 + y_1 = \sqrt{z}\)</span></p>
+
+Code block: `$should_not $process$`
+
+
 <blockquote><p>谔谔，谔谔……</p>
 </blockquote>
 <p>于是一时兴起，写了这么一篇博客，记录一些比较平时比较少见的 / 冷门的 / 超前的语法知识，供大家学习参考。</p>
